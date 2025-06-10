@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+option csharp_namespace = "docker_test_sharp";
+
+package dockerTesting;
+
+service docker_test_service {
+  rpc open(session_request) returns (common_response) {
+    option (google.api.http) = {
+      post: "/v1/open"
+      body: "*"
+    };
+  }
+  rpc communication(communication_request) returns (common_response) {
+    option (google.api.http) = {
+      post: "/v1/communication"
+      body: "*"
+    };
+  }
+  rpc jwtcheck(session_gcp_request) returns (common_response) {
+    option (google.api.http) = {
+      post: "/v1/jwtcheck"
+      body: "*"
+    };
+  }
+  rpc secretcheck(session_secret_request) returns (common_response) {
+    option (google.api.http) = {
+      post: "/v1/secretcheck"
+      body: "*"
+    }; 
+  }
+}
+
+message session_request {
+    string requestendpoint = 1;
+}
+
+message session_gcp_request{
+    string request = 1;
+}
+
+message session_secret_request {
+    string secretManager_project = 1;
+    string secretManager_secret = 2;
+    string secretManager_version = 3;
+}
+
+message communication_request{
+    string ip = 1;
+}
+
+message common_response{
+    string result = 1;
+}
